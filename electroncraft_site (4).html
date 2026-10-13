@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#061322">
+<meta name="description" content="ELECTRONCRAFT — Minecraft-сервер. Исследуй мир, строй, выживай и играй честно.">
+<title>ELECTRONCRAFT — Minecraft сервер</title>
+<style>
+:root{
+  --bg:#030914;--panel:rgba(7,24,43,.78);--line:rgba(35,205,255,.38);
+  --cyan:#28e5ff;--blue:#278bff;--ice:#c9f8ff;--muted:#8caec5;
+  --shadow:0 0 24px rgba(0,195,255,.13),inset 0 0 22px rgba(0,150,255,.035);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:90px}
+body{margin:0;background:var(--bg);color:#eafaff;font-family:Inter,Segoe UI,Arial,sans-serif;overflow-x:hidden}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:-3;background:radial-gradient(ellipse at 50% 0%,#0b2b50 0,transparent 55%),radial-gradient(ellipse at 85% 65%,#071c38 0,transparent 42%),#030914}
+#stars{position:fixed;inset:0;pointer-events:none;z-index:-2;opacity:.7}
+a{color:inherit;text-decoration:none}
+button{font:inherit}
+.wrap{width:min(1160px,calc(100% - 36px));margin:auto}
+header{position:sticky;top:0;z-index:20;background:rgba(3,10,22,.82);backdrop-filter:blur(18px);border-bottom:1px solid rgba(40,229,255,.2)}
+.nav{height:76px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+.brand{display:flex;align-items:center;gap:11px;font-weight:900;letter-spacing:2px;font-size:18px}
+.brand-mark{width:38px;height:38px;display:grid;place-items:center;border:1px solid var(--cyan);color:var(--cyan);transform:rotate(45deg);box-shadow:0 0 20px #16b8ff45;border-radius:10px}
+.brand-mark span{transform:rotate(-45deg);font-size:20px}
+.brand-name{background:linear-gradient(90deg,#e8fdff,var(--cyan),#498cff);color:transparent;background-clip:text}
+nav{display:flex;align-items:center;gap:25px;color:#b8d4e5;font-size:13px}
+nav a{transition:.25s}nav a:hover{color:var(--cyan);text-shadow:0 0 14px #28e5ff}
+.nav-cta,.btn{border:1px solid #25dfff;background:linear-gradient(120deg,#12bde9,#1678f5);color:#00111e;padding:12px 17px;border-radius:10px;font-weight:800;cursor:pointer;box-shadow:0 0 22px #08bfff2c;transition:transform .25s,box-shadow .25s}
+.nav-cta:hover,.btn:hover{transform:translateY(-3px);box-shadow:0 0 30px #08bfff70}
+.menu{display:none;background:none;color:var(--cyan);border:1px solid var(--line);border-radius:8px;padding:8px 11px}
+.hero{min-height:620px;display:grid;grid-template-columns:1.08fr .92fr;align-items:center;gap:35px;padding:70px 0 80px;position:relative}
+.eyebrow{display:inline-flex;align-items:center;gap:9px;color:var(--cyan);font-size:11px;letter-spacing:2.5px;text-transform:uppercase;border:1px solid #20d8ff42;background:#0a294033;padding:9px 12px;border-radius:30px}
+.dot{width:7px;height:7px;border-radius:50%;background:#4dffbd;box-shadow:0 0 12px #4dffbd;animation:pulse 1.5s infinite}
+h1{font-size:clamp(44px,7vw,82px);line-height:.96;letter-spacing:-3px;margin:24px 0 20px;font-weight:950}
+.gradient{background:linear-gradient(105deg,#f0feff 5%,#4deaff 42%,#3987ff 85%);color:transparent;background-clip:text;filter:drop-shadow(0 0 20px #16c9ff25)}
+.lead{color:#9dbbd0;line-height:1.8;font-size:16px;max-width:520px}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin:27px 0}
+.btn-secondary{padding:12px 17px;border:1px solid #2c7fa4;background:#081a2b;color:#d7f8ff;border-radius:10px;font-weight:750;transition:.25s}
+.btn-secondary:hover{border-color:var(--cyan);box-shadow:0 0 22px #00cfff26}
+.server-address{display:inline-flex;align-items:center;gap:13px;padding:13px 15px;border:1px solid var(--line);border-radius:12px;background:#061729b8;box-shadow:var(--shadow)}
+.server-address small{display:block;color:var(--muted);font-size:10px;letter-spacing:1.5px;margin-bottom:4px}
+.server-address strong{font-size:16px;letter-spacing:.5px;color:var(--ice)}
+.copy{border:1px solid #28dfff55;background:#0a2941;color:var(--cyan);padding:10px 12px;border-radius:8px;cursor:pointer}
+.copy:hover{background:#0c3a57}
+.hero-art{height:410px;position:relative;display:grid;place-items:center;perspective:900px}
+.orbit{position:absolute;width:330px;height:330px;border:1px solid #25dfff65;border-radius:50%;transform:rotateX(67deg) rotateZ(-25deg);box-shadow:0 0 24px #10caff12;animation:orbit 18s linear infinite}
+.orbit:before,.orbit:after{content:"";position:absolute;width:9px;height:9px;border-radius:2px;background:var(--cyan);box-shadow:0 0 22px var(--cyan)}
+.orbit:before{top:20px;left:50px}.orbit:after{right:25px;bottom:65px;background:#428dff}
+.orbit.two{width:260px;height:260px;transform:rotateX(67deg) rotateZ(35deg);border-color:#2b88ff66;animation-direction:reverse;animation-duration:14s}
+.cube{width:190px;height:190px;position:relative;transform:rotate(-30deg) skew(4deg,4deg);filter:drop-shadow(0 0 30px #008cff55);animation:float 5s ease-in-out infinite}
+.cube-face{position:absolute;inset:0;border:2px solid #67edff;background:linear-gradient(135deg,#0c668b,#08284e 65%,#06182c);box-shadow:inset 0 0 35px #00d9ff35,0 0 20px #007fff20}
+.cube-face:before{content:"E";position:absolute;inset:0;display:grid;place-items:center;font-size:132px;font-weight:950;font-family:Arial,sans-serif;color:#c5faff;text-shadow:0 0 12px #25e5ff,0 0 35px #008dff;transform:skew(-4deg,-4deg) rotate(30deg)}
+.cube-face:after{content:"";position:absolute;inset:12px;border:1px solid #41dfff60}
+.spark{position:absolute;width:7px;height:7px;background:#d9fcff;box-shadow:0 0 18px 5px #00bfff;animation:blink 2s infinite}
+.s1{top:18%;left:20%}.s2{top:24%;right:9%;animation-delay:.7s}.s3{bottom:18%;left:24%;animation-delay:1.2s}.s4{bottom:20%;right:18%;animation-delay:.3s}
+.art-label{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);white-space:nowrap;font-size:10px;letter-spacing:4px;color:#67dfff}
+section{padding:75px 0;position:relative}
+.section-head{text-align:center;margin:0 auto 36px;max-width:690px}
+.kicker{color:var(--cyan);font-size:11px;letter-spacing:3px;text-transform:uppercase}
+h2{font-size:clamp(29px,4vw,43px);letter-spacing:-1px;margin:12px 0;color:#e7fbff}
+.section-head p{color:var(--muted);line-height:1.7;margin:0}
+.features{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.card{position:relative;overflow:hidden;padding:24px;border:1px solid var(--line);background:linear-gradient(145deg,rgba(9,34,57,.86),rgba(4,15,29,.9));border-radius:15px;box-shadow:var(--shadow);transition:transform .3s,border-color .3s}
+.card:before{content:"";position:absolute;inset:-1px;background:linear-gradient(115deg,transparent 25%,#28e5ff10 50%,transparent 70%);transform:translateX(-100%);transition:transform .7s}
+.card:hover{transform:translateY(-5px);border-color:#38e7ffb0}.card:hover:before{transform:translateX(100%)}
+.icon{width:43px;height:43px;display:grid;place-items:center;border-radius:12px;color:var(--cyan);border:1px solid #25dfff55;background:#0a3450;font-size:21px;margin-bottom:16px;box-shadow:0 0 18px #00bfff14}
+.card h3{font-size:17px;margin:0 0 9px;color:#dffaff}.card p{font-size:13px;line-height:1.75;color:#93b2c8;margin:0}
+.rules-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:15px}
+.rule-card{padding:23px;border:1px solid #1a7397;border-radius:14px;background:linear-gradient(145deg,#081c30ed,#050f1eeb);transition:.3s}
+.rule-card:hover{border-color:var(--cyan);box-shadow:0 0 25px #00bfff18}
+.rule-title{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.rule-num{width:35px;height:35px;flex:0 0 auto;display:grid;place-items:center;color:var(--cyan);border:1px solid #24dfff75;border-radius:10px;background:#07314a;font-weight:900}
+.rule-title h3{margin:0;font-size:17px}
+.rule-card ul{padding-left:20px;margin:0;color:#a5c2d4;font-size:13px;line-height:1.85}
+.rule-card li{padding-left:3px;margin:3px 0}.rule-card li::marker{color:var(--cyan)}
+.note{margin-top:20px;padding:16px 18px;border-left:3px solid var(--cyan);background:#0820379c;color:#a9c9dc;font-size:13px;line-height:1.7}
+.staff{display:grid;grid-template-columns:repeat(4,1fr);gap:15px}
+.staff-card{text-align:center;padding:26px 15px 23px;border:1px solid var(--line);border-radius:15px;background:linear-gradient(160deg,#0a243c,#050e1b);position:relative;overflow:hidden;transition:.3s}
+.staff-card:hover{transform:translateY(-6px);box-shadow:0 0 30px #00bfff20;border-color:var(--cyan)}
+.avatar{width:76px;height:76px;border-radius:20px;margin:0 auto 17px;display:grid;place-items:center;font-size:27px;font-weight:900;color:#d9fbff;background:linear-gradient(145deg,#0d6286,#102d66 65%,#071a30);border:1px solid #42e5ff;box-shadow:0 0 22px #00bfff2a;transform:rotate(-3deg)}
+.role{font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:var(--cyan);margin-bottom:8px}
+.staff-card h3{font-size:17px;margin:0 0 8px;overflow-wrap:anywhere}.staff-card p{font-size:12px;line-height:1.6;color:var(--muted);margin:0}
+.join{border:1px solid #26dfff55;border-radius:20px;padding:42px 25px;text-align:center;background:radial-gradient(ellipse at 50% 0%,#0d4970a6,transparent 70%),#061426;box-shadow:0 0 45px #007bff13}
+.join h2{margin-top:0}.join p{color:var(--muted);line-height:1.7}
+footer{border-top:1px solid #1b4c68;padding:25px 0;color:#6f95ac;font-size:12px}
+.footer-inner{display:flex;align-items:center;justify-content:space-between;gap:15px}
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease}.reveal.visible{opacity:1;transform:translateY(0)}
+.toast{position:fixed;bottom:24px;left:50%;transform:translate(-50%,20px);padding:12px 18px;border:1px solid var(--cyan);border-radius:10px;background:#071c2cf5;color:#dffaff;box-shadow:0 0 25px #00bfff33;opacity:0;pointer-events:none;transition:.25s;z-index:50;font-size:13px}.toast.show{opacity:1;transform:translate(-50%,0)}
+@keyframes pulse{50%{opacity:.4;box-shadow:0 0 3px #4dffbd}}
+@keyframes orbit{to{transform:rotateX(67deg) rotateZ(335deg)}}
+@keyframes float{0%,100%{transform:translateY(0) rotate(-30deg) skew(4deg,4deg)}50%{transform:translateY(-13px) rotate(-26deg) skew(4deg,4deg)}}
+@keyframes blink{0%,100%{opacity:.2;transform:scale(.7)}50%{opacity:1;transform:scale(1.25)}}
+@media(max-width:850px){nav{gap:13px}.hero{grid-template-columns:1fr;padding-top:55px}.hero-art{height:330px;grid-row:1}.hero-copy{text-align:center}.lead{margin:auto}.hero-actions{justify-content:center}.server-address{margin:auto}.features{grid-template-columns:repeat(2,1fr)}.staff{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:620px){.nav{height:66px}.menu{display:block}nav{display:none;position:absolute;top:66px;left:0;right:0;padding:18px;background:#04101ff7;border-bottom:1px solid var(--line);flex-direction:column;align-items:stretch}nav.open{display:flex}nav a{padding:8px}.nav-cta{display:none}.brand{font-size:15px}.hero{padding:38px 0 55px;gap:8px}.hero-art{height:270px}.cube{width:145px;height:145px}.cube-face:before{font-size:100px}.orbit{width:270px;height:270px}.orbit.two{width:215px;height:215px}h1{letter-spacing:-2px}.lead{font-size:14px}.server-address strong{font-size:13px}.features,.rules-grid,.staff{grid-template-columns:1fr}section{padding:55px 0}.card{padding:21px}.footer-inner{flex-direction:column;text-align:center}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}.reveal{opacity:1;transform:none}}
+
+.team-modal{position:fixed;inset:0;z-index:100;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(0,5,15,.78);backdrop-filter:blur(12px)}
+.team-modal.open{display:flex;animation:fadeIn .2s ease}
+.modal-panel{position:relative;width:min(480px,100%);padding:30px;border:1px solid #28e5ff9c;border-radius:18px;background:radial-gradient(ellipse at 50% 0%,#10436a 0,transparent 62%),#061323;box-shadow:0 0 55px #00bfff25, inset 0 0 28px #00bfff09;animation:modalUp .28s ease}
+.modal-close{position:absolute;top:12px;right:13px;width:36px;height:36px;border-radius:10px;border:1px solid #2c8eb0;background:#09243a;color:#c8faff;font-size:22px;cursor:pointer}
+.modal-panel .avatar{width:86px;height:86px;margin:0 0 18px;transform:none}
+.modal-panel h3{font-size:25px;margin:0 0 7px;overflow-wrap:anywhere}
+.modal-role{color:var(--cyan);font-size:11px;letter-spacing:1.8px;text-transform:uppercase;margin-bottom:18px}
+.modal-panel p{color:#a8c6d8;font-size:14px;line-height:1.8;margin:0}
+.staff-card{cursor:pointer;text-align:center}
+.staff-card:focus-visible{outline:2px solid var(--cyan);outline-offset:4px}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes modalUp{from{opacity:0;transform:translateY(14px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+
+</style>
+</head>
+<body>
+<canvas id="stars" aria-hidden="true"></canvas>
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="#home" aria-label="ELECTRONCRAFT — главная"><span class="brand-mark"><span>ϟ</span></span><span class="brand-name">ELECTRONCRAFT</span></a>
+    <nav id="navigation">
+      <a href="#home">Главная</a><a href="#about">О сервере</a><a href="#rules">Правила</a><a href="#team">Команда</a>
+    </nav>
+    <button class="nav-cta" onclick="copyIP()">Скопировать IP ↗</button>
+    <button class="menu" id="menuBtn" aria-label="Открыть меню" aria-expanded="false">☰</button>
+  </div>
+</header>
+
+<main>
+  <section class="wrap hero" id="home">
+    <div class="hero-copy">
+      <div class="eyebrow"><span class="dot"></span> ТВОЁ ПРИКЛЮЧЕНИЕ НАЧИНАЕТСЯ ЗДЕСЬ</div>
+      <h1><span class="gradient">ELECTRON</span><br><span>CRAFT<span style="color:var(--cyan)">.</span></span></h1>
+      <p class="lead">Мир, который создают игроки. Исследуй неизведанные земли, строй то, чем будешь гордиться, и оставь свой след в истории сервера.</p>
+      <div class="hero-actions"><a class="btn" href="#about">Исследовать сервер ↓</a><a class="btn-secondary" href="#rules">Прочитать правила</a></div>
+      <div class="server-address"><div><small>АДРЕС СЕРВЕРА</small><strong id="serverIp">УКАЖИ_IP_СЕРВЕРА</strong></div><button class="copy" onclick="copyIP()" aria-label="Скопировать адрес">▣</button></div>
+    </div>
+    <div class="hero-art" aria-label="Неоновая эмблема Electroncraft">
+      <div class="orbit"></div><div class="orbit two"></div>
+      <div class="cube"><div class="cube-face"></div></div>
+      <i class="spark s1"></i><i class="spark s2"></i><i class="spark s3"></i><i class="spark s4"></i>
+      <div class="art-label">BUILD · EXPLORE · SURVIVE</div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="wrap">
+      <div class="section-head reveal"><div class="kicker">ПОЧЕМУ ELECTRONCRAFT</div><h2>Твой мир. Твои правила игры.</h2><p>Уважение к игрокам, свобода строительства и честное выживание — основа нашего сообщества.</p></div>
+      <div class="features">
+        <article class="card reveal"><div class="icon">◇</div><h3>Свобода творчества</h3><p>Создавай базы, города, фермы и масштабные проекты. Твоя фантазия задаёт границы.</p></article>
+        <article class="card reveal"><div class="icon">⌁</div><h3>Честная игра</h3><p>Запрещены читы и нечестные преимущества. Побеждай благодаря знаниям, навыкам и подготовке.</p></article>
+        <article class="card reveal"><div class="icon">⌘</div><h3>Уважительное комьюнити</h3><p>Общайся, объединяйся с другими игроками и решай конфликты без травли и оскорблений.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section id="rules">
+    <div class="wrap">
+      <div class="section-head reveal"><div class="kicker">ОБЯЗАТЕЛЬНО К ПРОЧТЕНИЮ</div><h2>Правила сервера</h2><p>Играя на ELECTRONCRAFT, ты соглашаешься соблюдать эти правила. Незнание правил не освобождает от ответственности.</p></div>
+      <div class="rules-grid">
+        <article class="rule-card reveal"><div class="rule-title"><span class="rule-num">01</span><h3>Общение и уважение</h3></div><ul>
+          <li>Относись к игрокам уважительно независимо от их опыта, возраста, стиля игры и времени на сервере.</li>
+          <li>Запрещены оскорбления, травля, угрозы, унижение, преследование и намеренные провокации.</li>
+          <li>Не допускаются дискриминационные высказывания, призывы к ненависти и публикация личных данных других людей.</li>
+          <li>Запрещены спам, флуд, бессмысленное повторение сообщений, злоупотребление капсом и намеренное засорение чата.</li>
+          <li>Не выдавай себя за владельца, администратора, модератора или другого игрока.</li>
+          <li>Не публикуй вредоносные ссылки, подозрительные файлы и рекламу сторонних серверов без разрешения команды.</li>
+          <li>Не используй чат для обхода фильтров: пробелы, символы и намеренные искажения не делают запрещённое сообщение допустимым.</li>
+        </ul></article>
+        <article class="rule-card reveal"><div class="rule-title"><span class="rule-num">02</span><h3>Гриферство и чужое имущество</h3></div><ul>
+          <li>Запрещено ломать, перестраивать, заливать или иным способом портить чужие постройки без явного разрешения владельца.</li>
+          <li>Нельзя забирать предметы из чужих сундуков, бочек, шалкеров, печей, воронок и любых других хранилищ.</li>
+          <li>Не уничтожай и не перенаправляй чужие фермы, механизмы, сортировщики, транспортные линии и редстоун-схемы.</li>
+          <li>Запрещено поджигать чужие постройки, заливать территорию лавой или водой, оставлять опасные ямы и портить ландшафт рядом с базой.</li>
+          <li>Не убивай чужих животных, приручённых питомцев и мобов, которых игрок разводит или использует в своей постройке.</li>
+          <li>Не закрывай чужие входы блоками, не окружай базу мешающими конструкциями и не создавай помехи ради преследования игрока.</li>
+          <li>Не присваивай чужую территорию или постройку только потому, что владелец временно не находится в сети.</li>
+          <li>Если границы владения неочевидны, уточни у владельца или администрации, прежде чем что-либо менять.</li>
+        </ul></article>
+        <article class="rule-card reveal"><div class="rule-title"><span class="rule-num">03</span><h3>Честная игра и модификации</h3></div><ul>
+          <li>Запрещены читы, X-Ray, ESP, KillAura, Fly, Speedhack, автоприцеливание и любые средства, дающие нечестное преимущество.</li>
+          <li>Запрещены макросы и автоматизация действий, позволяющие обходить обычные игровые ограничения или играть вместо человека.</li>
+          <li>Не используй модификации, текстуры или внешние программы для скрытия руд, игроков, сущностей либо важных игровых объектов.</li>
+          <li>Запрещено использовать баги, дюпы, ошибки механик или уязвимости для получения предметов, ресурсов или преимущества.</li>
+          <li>Если обнаружил ошибку, которая может повлиять на баланс или сохранность мира, прекрати её использовать и сообщи администрации.</li>
+          <li>Разрешённость конкретного мода при сомнениях нужно уточнить у команды до его использования.</li>
+          <li>Запрещены попытки обойти античит, ограничения сервера или проверку нарушения с помощью альтернативного клиента или аккаунта.</li>
+        </ul></article>
+        <article class="rule-card reveal"><div class="rule-title"><span class="rule-num">04</span><h3>PvP, ловушки и взаимодействие</h3></div><ul>
+          <li>Не убивай одного и того же игрока снова и снова ради травли, лишения возможности играть или намеренной порчи игрового опыта.</li>
+          <li>Перед дружеской дуэлью, тренировкой или рискованным PvP согласуй условия со всеми участниками.</li>
+          <li>Не заманивай игроков обещанием безопасной сделки или помощи, если на самом деле планируешь обмануть и ограбить их.</li>
+          <li>Не используй чужую базу, доверие или совместный проект для внезапного уничтожения имущества или кражи ресурсов.</li>
+          <li>Не мешай игроку возвращать свои вещи и не блокируй его намеренно после спорной ситуации.</li>
+          <li>Если вы договорились о правилах боя, обмена или совместного мероприятия, соблюдай договорённость.</li>
+          <li>При конфликте не переходи к оскорблениям и мести: сохрани доказательства и обратись к администрации.</li>
+        </ul></article>
+        <article class="rule-card reveal"><div class="rule-title"><span class="rule-num">05</span><h3>Торговля, обмен и экономика</h3></div><ul>
+          <li>Соблюдай согласованные условия обмена: предметы, количество, сроки и дополнительные условия должны быть понятны обеим сторонам.</li>
+          <li>Запрещены мошенничество, подмена предметов, намеренное сокрытие условий сделки и ложные обещания при торговле.</li>
+          <li>Не используй дюпы, баги, читы или сторонние программы для искусственного получения ресурсов и влияния на экономику.</li>
+          <li>Не выдавай обычный предмет за редкий или ценный с целью обмануть покупателя.</li>
+          <li>Перед крупной сделкой рекомендуется зафиксировать условия в чате, чтобы при споре можно было проверить договорённость.</li>
+          <li>Администрация не гарантирует автоматический возврат предметов в каждой добровольной сделке; спор рассматривается по доказательствам и обстоятельствам.</li>
+        </ul></article>
+        <article class="rule-card reveal"><div class="rule-title"><span class="rule-num">06</span><h3>Территории, постройки и мир</h3></div><ul>
+          <li>Не строй намеренно вплотную к чужой базе, если это мешает развитию территории или делается для провокации.</li>
+          <li>Не создавай огромные бессмысленные конструкции, потоки сущностей или механизмы, которые заметно ухудшают производительность сервера.</li>
+          <li>Не оставляй опасные ямы, лавовые ловушки и другие угрозы в местах общего пользования без предупреждения и согласованных мер безопасности.</li>
+          <li>Не порти общественные дороги, станции, порталы, фермы и другие общие сооружения.</li>
+          <li>Не занимай чужие постройки и ресурсы под предлогом того, что они выглядят заброшенными.</li>
+          <li>Согласуй с участниками изменения в общих проектах, если они затрагивают чужую работу или вложенные ресурсы.</li>
+        </ul></article>
+        <article class="rule-card reveal"><div class="rule-title"><span class="rule-num">07</span><h3>Аккаунты и безопасность</h3></div><ul>
+          <li>Ты отвечаешь за действия, совершённые с твоего аккаунта; не передавай доступ людям, которым не доверяешь.</li>
+          <li>Запрещено использовать альтернативные аккаунты для обхода блокировки, продолжения травли или сокрытия повторных нарушений.</li>
+          <li>Не пытайся получить чужой пароль, доступ к аккаунту, личной переписке или устройству.</li>
+          <li>Не распространяй персональные данные, IP-адреса, фотографии и другие личные сведения игроков без их согласия.</li>
+          <li>Сообщай администрации о подозрительных ссылках, попытках взлома, угрозах безопасности и найденных уязвимостях.</li>
+        </ul></article>
+        <article class="rule-card reveal"><div class="rule-title"><span class="rule-num">08</span><h3>Администрация и наказания</h3></div><ul>
+          <li>Не мешай администрации проверять жалобы, расследовать нарушения и поддерживать работу сервера.</li>
+          <li>Не выдавай личное мнение участника команды за официальное решение всего проекта.</li>
+          <li>Обсуждай спорные решения спокойно и в личном обращении, а не через флуд и публичные оскорбления в чате.</li>
+          <li>В жалобе укажи ник игрока, время, описание ситуации и приложи доступные доказательства: скриншоты или видео.</li>
+          <li>В зависимости от тяжести и повторяемости нарушения могут применяться предупреждение, временный мут, временная блокировка или постоянный бан.</li>
+          <li>Сокрытие доказательств, повтор нарушения после предупреждения и попытки обхода наказания могут стать отягчающими обстоятельствами.</li>
+          <li>Администрация рассматривает каждый случай с учётом обстоятельств и доступных доказательств; решение можно обжаловать в установленном командой порядке.</li>
+        </ul></article>
+      </div>
+      <div class="note reveal"><strong style="color:var(--cyan)">Важно:</strong> администрация рассматривает обстоятельства и доказательства каждого случая. Попытки скрыть нарушение или продолжить его после предупреждения могут привести к более строгому наказанию. Не уверен, разрешено ли действие? Сначала спроси команду.</div>
+    </div>
+  </section>
+
+  <section id="team">
+    <div class="wrap">
+      <div class="section-head reveal"><div class="kicker">ЛЮДИ ЗА ПРОЕКТОМ</div><h2>Команда сервера</h2><p>Знакомься с теми, кто отвечает за развитие и порядок на ELECTRONCRAFT.</p></div>
+      <div class="staff">
+        <article class="staff-card reveal" tabindex="0" role="button" data-name="Creepiks_YT" data-role="Владелец" data-letter="C" data-info="Владелец отвечает за общее направление проекта: принимает ключевые решения, определяет правила и приоритеты развития, координирует команду и следит за тем, чтобы сервер оставался комфортным местом для игроков."><div class="avatar">C</div><div class="role">Владелец</div><h3>Creepiks_YT</h3><p>Нажми, чтобы узнать подробнее</p></article>
+        <article class="staff-card reveal" tabindex="0" role="button" data-name="Arlyteks" data-role="Технический администратор" data-letter="A" data-info="Технический администратор отвечает за техническую сторону проекта: настройку сервера и его компонентов, поиск и устранение технических проблем, проверку работоспособности функций и помощь в поддержании стабильной игры."><div class="avatar">A</div><div class="role">Технический администратор</div><h3>Arlyteks</h3><p>Нажми, чтобы узнать подробнее</p></article>
+        <article class="staff-card reveal" tabindex="0" role="button" data-name="PandaGames67" data-role="Главный администратор" data-letter="P" data-info="Главный администратор следит за соблюдением правил, рассматривает обращения игроков, помогает разрешать конфликты, проверяет жалобы и при необходимости передаёт сложные случаи владельцу или техническому администратору."><div class="avatar">P</div><div class="role">Главный администратор</div><h3>PandaGames67</h3><p>Нажми, чтобы узнать подробнее</p></article>
+        <article class="staff-card reveal" tabindex="0" role="button" data-name="Safre" data-role="Главный администратор" data-letter="S" data-info="Главный администратор помогает поддерживать порядок, принимает жалобы, разбирает спорные ситуации, напоминает игрокам о правилах и содействует команде в создании спокойной и честной атмосферы на сервере."><div class="avatar">S</div><div class="role">Главный администратор</div><h3>Safre</h3><p>Нажми, чтобы узнать подробнее</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap"><div class="join reveal"><div class="kicker">ГОТОВ К ПРИКЛЮЧЕНИЮ?</div><h2>Увидимся в игре.</h2><p>Подготовь инструменты, найди место под базу и начни строить собственную историю.</p><button class="btn" onclick="copyIP()">Скопировать IP сервера ↗</button></div></div>
+  </section>
+</main>
+<footer><div class="wrap footer-inner"><a class="brand" href="#home"><span class="brand-mark"><span>ϟ</span></span><span class="brand-name">ELECTRONCRAFT</span></a><span>Играй честно. Создавай больше.</span><a href="#rules">Правила сервера ↑</a></div></footer>
+
+<div class="team-modal" id="teamModal" role="dialog" aria-modal="true" aria-labelledby="modalName">
+  <div class="modal-panel">
+    <button class="modal-close" id="modalClose" aria-label="Закрыть окно">×</button>
+    <div class="avatar" id="modalAvatar">E</div>
+    <div class="modal-role" id="modalRole">Роль</div>
+    <h3 id="modalName">Участник команды</h3>
+    <p id="modalInfo"></p>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite">Адрес скопирован</div>
+
+<script>
+// ЗАМЕНИ значение ниже на настоящий адрес своего Minecraft-сервера.
+const SERVER_IP = "electroncraft.aternos.me";
+const ipLabel = document.getElementById("serverIp");
+ipLabel.textContent = SERVER_IP;
+
+async function copyIP(){
+  if(!SERVER_IP){
+    showToast("IP сервера не настроен");
+    return;
+  }
+  try{
+    await navigator.clipboard.writeText(SERVER_IP);
+    showToast("IP скопирован: " + SERVER_IP);
+  }catch(e){
+    const field=document.createElement("textarea");
+    field.value=SERVER_IP;field.style.position="fixed";field.style.opacity="0";
+    document.body.appendChild(field);field.select();
+    const ok=document.execCommand("copy");field.remove();
+    showToast(ok ? "IP скопирован: " + SERVER_IP : "Не удалось скопировать. IP: " + SERVER_IP);
+  }
+}
+let toastTimer;
+function showToast(message){
+  const toast=document.getElementById("toast");
+  toast.textContent=message;toast.classList.add("show");
+  clearTimeout(toastTimer);toastTimer=setTimeout(()=>toast.classList.remove("show"),2800);
+}
+const menuBtn=document.getElementById("menuBtn");
+const navigation=document.getElementById("navigation");
+menuBtn.addEventListener("click",()=>{
+  const open=navigation.classList.toggle("open");
+  menuBtn.setAttribute("aria-expanded",String(open));
+});
+navigation.querySelectorAll("a").forEach(a=>a.addEventListener("click",()=>{
+  navigation.classList.remove("open");menuBtn.setAttribute("aria-expanded","false");
+}));
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add("visible");observer.unobserve(entry.target)}});
+},{threshold:.12});
+document.querySelectorAll(".reveal").forEach(el=>observer.observe(el));
+
+// Лёгкое звёздное поле на canvas; корректно перестраивается при изменении размера окна.
+
+const teamModal=document.getElementById("teamModal");
+const modalClose=document.getElementById("modalClose");
+function openTeamModal(card){
+  document.getElementById("modalAvatar").textContent=card.dataset.letter;
+  document.getElementById("modalRole").textContent=card.dataset.role;
+  document.getElementById("modalName").textContent=card.dataset.name;
+  document.getElementById("modalInfo").textContent=card.dataset.info;
+  teamModal.classList.add("open");
+  document.body.style.overflow="hidden";
+  modalClose.focus();
+}
+function closeTeamModal(){
+  teamModal.classList.remove("open");
+  document.body.style.overflow="";
+}
+document.querySelectorAll(".staff-card").forEach(card=>{
+  card.addEventListener("click",()=>openTeamModal(card));
+  card.addEventListener("keydown",event=>{
+    if(event.key==="Enter"||event.key===" "){event.preventDefault();openTeamModal(card)}
+  });
+});
+modalClose.addEventListener("click",closeTeamModal);
+teamModal.addEventListener("click",event=>{if(event.target===teamModal)closeTeamModal()});
+document.addEventListener("keydown",event=>{if(event.key==="Escape"&&teamModal.classList.contains("open"))closeTeamModal()});
+
+const canvas=document.getElementById("stars"),ctx=canvas.getContext("2d");
+let stars=[],w=0,h=0;
+function resizeStars(){
+  const dpr=Math.min(window.devicePixelRatio||1,2);
+  w=window.innerWidth;h=window.innerHeight;
+  canvas.width=w*dpr;canvas.height=h*dpr;canvas.style.width=w+"px";canvas.style.height=h+"px";
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+  stars=Array.from({length:Math.min(130,Math.floor(w*h/9500))},()=>({x:Math.random()*w,y:Math.random()*h,r:Math.random()*1.4+.3,a:Math.random()*.6+.15,s:Math.random()*.18+.04}));
+}
+function drawStars(){
+  ctx.clearRect(0,0,w,h);
+  for(const s of stars){
+    s.y-=s.s;if(s.y<0){s.y=h;s.x=Math.random()*w}
+    ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+    ctx.fillStyle=`rgba(104,220,255,${s.a})`;ctx.fill();
+  }
+  requestAnimationFrame(drawStars);
+}
+window.addEventListener("resize",resizeStars);resizeStars();drawStars();
+</script>
+</body>
+</html>
